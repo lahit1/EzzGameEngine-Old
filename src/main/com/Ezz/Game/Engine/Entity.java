@@ -4,7 +4,7 @@ import android.annotation.NonNull;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
-import com.Ezz.Game.Engine.Math.Vector2;
+import com.Ezz.Game.Engine.math.Vector2;
 
 abstract public class Entity {
 	
