@@ -1,9 +1,10 @@
 package com.Ezz.Game.Engine;
 
+import android.annotation.NonNull;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
-import android.annotation.NonNull;
+import com.Ezz.Game.Engine.Math.Vector2;
 
 abstract public class Entity {
 	

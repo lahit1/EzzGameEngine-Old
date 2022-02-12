@@ -10,6 +10,7 @@ import android.view.View.OnClickListener;
 import android.view.View.OnTouchListener;
 import android.widget.LinearLayout.LayoutParams;
 import com.Ezz.Game.Engine.Entity;
+import com.Ezz.Game.Engine.Math.Vector2;
 import java.util.ArrayList;
 
 abstract public class Universe extends View implements OnClickListener, OnTouchListener{
