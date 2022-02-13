@@ -19,6 +19,8 @@ abstract public class Entity {
 	}
 
 	abstract public void draw(Canvas canvas);
+	abstract public void onClick();
+	abstract public void onTouch();
 	
 	public Universe getUniverse(){
 		return universe;

@@ -3,15 +3,16 @@ package com.Ezz.Game.Engine;
 import android.annotation.NonNull;
 import android.app.Activity;
 import android.content.Context;
+import android.content.res.AssetManager;
 import android.graphics.Canvas;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.view.View.OnTouchListener;
 import android.widget.LinearLayout.LayoutParams;
 import com.Ezz.Game.Engine.Entity;
 import com.Ezz.Game.Engine.math.Vector2;
 import java.util.ArrayList;
+import android.view.View.OnClickListener;
 
 abstract public class Universe {
 
@@ -26,13 +27,21 @@ abstract public class Universe {
 
 	public Universe(@NonNull Context context){
 		this.context = context;
+		((Activity) context).getActionBar().hide();
 		engine = new Engine(context);
-		((Activity) context).setContentView(engine);
 		engine.setOnTouchListener(engine);
 		start();
 	}
 	public Context getContext(){
 		return context;
+	}
+	
+	public AssetManager getAssets(){
+		return context.getAssets();
+	}
+	
+	public Engine getEngine(){
+		return engine;
 	}
 	
 	public abstract void start();
@@ -64,7 +73,7 @@ abstract public class Universe {
 	}
 	
 	private class Engine extends View implements OnTouchListener {
-		
+
 		Engine(Context context){
 			super(context);
 			size.set(getWidth(), getHeight());
@@ -73,7 +82,15 @@ abstract public class Universe {
 		@Override
 		public boolean onTouch(View p1, MotionEvent p2) {
 			onScreenTouch(p2.getX(), getHeight() - p2.getY());
-			Input.isClicked = p2.getAction() != MotionEvent.ACTION_UP;
+			for(Entity e: entities){
+				if(e.getPosition().x < Input.getPosition().x && Input.getPosition().x < e.getPosition().x + e.getSize().x && e.getPosition().y < Input.getPosition().y && Input.getPosition().y < e.getPosition().y + e.getSize().y){
+					if(p2.getAction() == MotionEvent.ACTION_UP){
+						e.onClick();
+					}else{
+						e.onTouch();
+					}
+				}
+			}
 			Input.position.set(p2.getX(), getHeight() - p2.getY());
 			Input.montionevent = p2;
 			return true;
@@ -97,13 +114,8 @@ abstract public class Universe {
 	}
 	
 	public class Input{
-		private boolean isClicked = false;
 		private Vector2 position = new Vector2();
 		private MotionEvent montionevent;
-		
-		public boolean isScreenTouched(){
-			return isClicked;
-		}
 		
 		public Vector2 getPosition(){
 			return position;
