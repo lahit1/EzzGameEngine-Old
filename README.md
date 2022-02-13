@@ -7,3 +7,6 @@ An simple Game Engine for beginners by Naif Can Başçı
 
 
 Don't forget to leave a star😉
+
+<a href="https://discord.gg/aB6eYvDYF8" target="_blank">Discord</a>
+<a href="https://github.com/lahit1/EzzGameEngine2D/master/LICENSE" target="_blank">LICENSE</a>
