@@ -23,4 +23,13 @@ public class CircleEntity extends Entity {
 	public void draw(Canvas canvas) {
 		canvas.drawCircle(getRenderX(), getRenderY(), getSize().x / 2, getPaint());
 	}
+
+	@Override
+	public void onClick() {
+	}
+
+	@Override
+	public void onTouch() {
+	}
+
 }

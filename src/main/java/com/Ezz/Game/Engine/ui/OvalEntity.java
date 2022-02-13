@@ -14,4 +14,12 @@ public class OvalEntity extends Entity {
 	public void draw(Canvas canvas){
 		canvas.drawOval(getRenderX(), getRenderY(), getRenderX() + getSize().x, getRenderY() + getSize().y, getPaint());
 	}
+
+	@Override
+	public void onClick() {
+	}
+
+	@Override
+	public void onTouch() {
+	}
 }
