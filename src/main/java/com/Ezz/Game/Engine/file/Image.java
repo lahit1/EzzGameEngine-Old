@@ -9,7 +9,10 @@ import java.io.InputStream;
 
 public class Image {
 	
-	private Drawable drawable;
+	private Drawable drawable = null;
+	
+	public Image(){
+	}
 
     public Image(@NonNull Drawable drawable){
 		this.drawable = drawable;
