@@ -12,6 +12,7 @@ public class SwitchEntity extends Entity {
 	
 	private Paint buttonPaint;
 	private boolean checked;
+	private int butPos;
 	
 	public SwitchEntity(Universe universe){
 		super(universe);
