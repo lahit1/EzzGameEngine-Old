@@ -7,7 +7,7 @@ import com.Ezz.Game.Engine.file.Image;
 
 public class ImageEntity extends Entity {
 	
-	private Image image;
+	private Image image = new Image();
     
 	public ImageEntity(Universe universe){
 		super(universe);
