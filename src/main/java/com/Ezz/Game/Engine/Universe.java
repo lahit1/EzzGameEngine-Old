@@ -4,6 +4,7 @@ import android.annotation.NonNull;
 import android.app.Activity;
 import android.content.Context;
 import android.content.res.AssetManager;
+import android.content.res.Resources;
 import android.graphics.Canvas;
 import android.view.MotionEvent;
 import android.view.View;
@@ -12,7 +13,6 @@ import android.widget.LinearLayout.LayoutParams;
 import com.Ezz.Game.Engine.Entity;
 import com.Ezz.Game.Engine.math.Vector2;
 import java.util.ArrayList;
-import android.view.View.OnClickListener;
 
 abstract public class Universe {
 
@@ -32,12 +32,17 @@ abstract public class Universe {
 		engine.setOnTouchListener(engine);
 		start();
 	}
+	
 	public Context getContext(){
 		return context;
 	}
 	
 	public AssetManager getAssets(){
 		return context.getAssets();
+	}
+	
+	public Resources getResources(){
+		return context.getResources();
 	}
 	
 	public Engine getEngine(){
@@ -49,7 +54,6 @@ abstract public class Universe {
 	public abstract void onScreenTouch(float x, float y);
 
 	public Vector2 getPosition(){
-		position.set(engine.getX(), engine.getY());
 		return position;
 	}
 	
@@ -57,21 +61,22 @@ abstract public class Universe {
 		return size;
 	}
 	
-	public Vector2 getGravity(){
-		return gravity;
-	}
-
-	public void setContentView(@NonNull View view){
-		((Activity) getContext()).setContentView(view);
-	}
-	public void setContentView(@NonNull int layoutResID){
-		((Activity) getContext()).setContentView(layoutResID);
-	}
-
-	public void setContentView(@NonNull View view, LayoutParams params){
-		((Activity) getContext()).setContentView(view, params);
+	public void setUniverse(@NonNull Universe universe){
+		((Activity) context).setContentView(universe.getEngine());
 	}
 	
+	public void setContentView(View view, LayoutParams params){
+		((Activity) context).setContentView(view, params);
+	}
+	
+	public void setContentView(int layoutResId){
+		((Activity) context).setContentView(layoutResId);
+	}
+	
+	public void setContentView(View view){
+		((Activity) context).setContentView(view);
+	}
+
 	private class Engine extends View implements OnTouchListener {
 
 		Engine(Context context){
@@ -86,13 +91,16 @@ abstract public class Universe {
 				if(e.getPosition().x < Input.getPosition().x && Input.getPosition().x < e.getPosition().x + e.getSize().x && e.getPosition().y < Input.getPosition().y && Input.getPosition().y < e.getPosition().y + e.getSize().y){
 					if(p2.getAction() == MotionEvent.ACTION_UP){
 						e.onClick();
+						e.getScreenListener().onClick();
 					}else{
 						e.onTouch();
+						e.getScreenListener().onTouch();
 					}
 				}
 			}
+			Input.action = p2.getAction();
+			Input.me = p2;
 			Input.position.set(p2.getX(), getHeight() - p2.getY());
-			Input.montionevent = p2;
 			return true;
 		}
 		
@@ -115,14 +123,19 @@ abstract public class Universe {
 	
 	public class Input{
 		private Vector2 position = new Vector2();
-		private MotionEvent montionevent;
+		private int action;
+		private MotionEvent me;
 		
 		public Vector2 getPosition(){
 			return position;
 		}
 		
-		public MotionEvent getMontionEvent(){
-			return montionevent;
+		public int getAction(){
+			return action;
+		}
+		
+		public MotionEvent getMotionEvent(){
+			return me;
 		}
 	}
 }
