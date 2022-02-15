@@ -41,4 +41,7 @@ public class ImageEntity extends Entity {
 	public void onTouch() {
 	}
 
+	@Override
+	public void onLongClick() {
+	}
 }

@@ -59,4 +59,7 @@ public class SwitchEntity extends Entity {
 		checked = !checked;
 	}
 
+	@Override
+	public void onLongClick() {
+	}
 }

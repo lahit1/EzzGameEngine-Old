@@ -23,4 +23,7 @@ public class RectEntity extends Entity{
 	public void onTouch() {
 	}
 
+	@Override
+	public void onLongClick() {
+	}
 }
