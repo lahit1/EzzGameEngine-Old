@@ -1,34 +1,47 @@
 package com.Ezz.Game.Engine.ui;
 
 import android.graphics.Canvas;
-import android.graphics.drawable.Drawable;
 import com.Ezz.Game.Engine.Entity;
 import com.Ezz.Game.Engine.Universe;
+import com.Ezz.Game.Engine.file.Image;
 
 public class ImageEntity extends Entity {
 	
-	private Drawable drawable = null;
+	private Image image = new Image();
     
 	public ImageEntity(Universe universe){
 		super(universe);
 	}
 	
-	public ImageEntity(Universe universe, Drawable drawable){
+	public ImageEntity(Universe universe, Image image){
 		super(universe);
-		this.drawable = drawable;
+		this.image = image;
 	}
 
-	public void setDrawable(Drawable drawable) {
-		this.drawable = drawable;
+	public void setDrawable(Image image) {
+		this.image = image;
 	}
 
-	public Drawable getDrawable() {
-		return drawable;
+	public Image getImage() {
+		return image;
 	}
 	
 	@Override
 	public void draw(Canvas canvas) {
-		drawable.setBounds((int) getRenderX(), (int) getRenderY(), (int) getRenderX() + (int) getSize().x, (int)getRenderY() + (int)getSize().y);
-		drawable.draw(canvas);
+		if(image == null) return;
+		image.getDrawable().setBounds((int) getRenderX(), (int) getRenderY(), (int) getRenderX() + (int) getSize().x, (int)getRenderY() + (int)getSize().y);
+		image.getDrawable().draw(canvas);
+	}
+
+	@Override
+	public void onClick() {
+	}
+
+	@Override
+	public void onTouch() {
+	}
+
+	@Override
+	public void onLongClick() {
 	}
 }

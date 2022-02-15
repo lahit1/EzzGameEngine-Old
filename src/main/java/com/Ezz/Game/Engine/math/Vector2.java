@@ -37,9 +37,39 @@ public class Vector2 {
 		this.y += y;
 	}
 	
+	public void add(@NonNull Vector2 v){
+		this.x += v.x;
+		this.y += v.y;
+	}
+	
+	public void sub(float x, float y){
+		this.x -= x;
+		this.y -= y;
+	}
+
+	public void sub(@NonNull Vector2 v){
+		this.x -= v.x;
+		this.y -= v.y;
+	}
+	
 	public void mul(float x, float y){
 		this.x *= x;
 		this.y *= y;
+	}
+	
+	public void mul(@NonNull Vector2 v){
+		this.x *= v.x;
+		this.y *= v.y;
+	}
+	
+	public void div(float x, float y){
+		this.x /= x;
+		this.y /= y;
+	}
+
+	public void div(@NonNull Vector2 v){
+		this.x /= v.x;
+		this.y /= v.y;
 	}
 	
 	public Float[] toFloatArray(){
