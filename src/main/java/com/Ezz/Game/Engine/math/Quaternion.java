@@ -39,11 +39,53 @@ public class Quaternion {
 		this.w += w;
 	}
 	
-	public void multiplication(float x, float y, float z, float w){
+	public void add(Quaternion q){
+		this.x += q.x;
+		this.y += q.y;
+		this.z += q.z;
+		this.w += q.w;
+	}
+	
+	public void sub(float x, float y, float z, float w){
+		this.x -= x;
+		this.y -= y;
+		this.z -= z;
+		this.w -= w;
+	}
+
+	public void sub(Quaternion q){
+		this.x -= q.x;
+		this.y -= q.y;
+		this.z -= q.z;
+		this.w -= q.w;
+	}
+	
+	public void mul(float x, float y, float z, float w){
 		this.x *= x;
 		this.y *= y;
 		this.z *= z;
 		this.w *= w;
+	}
+	
+	public void mul(Quaternion q){
+		this.x *= q.x;
+		this.y *= q.y;
+		this.z *= q.z;
+		this.w *= q.w;
+	}
+	
+	public void div(float x, float y, float z, float w){
+		this.x /= x;
+		this.y /= y;
+		this.z /= z;
+		this.w /= w;
+	}
+
+	public void div(Quaternion q){
+		this.x /= q.x;
+		this.y /= q.y;
+		this.z /= q.z;
+		this.w /= q.w;
 	}
 
 	public Float[] toFloatArray(){
