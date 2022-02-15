@@ -100,7 +100,7 @@ abstract public class Entity {
 		isUI = v;
 	}
 
-	public boolean isStatic() {
+	public boolean isUI() {
 		return isUI;
 	}
 
