@@ -1,9 +1,9 @@
-package com.Ezz.Game.Engine.ui;
+package com.Ezz.Game.Engine.graphic;
 
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
-import com.Ezz.Game.Engine.Entity;
+import com.Ezz.Game.Engine.graphic.Entity;
 import com.Ezz.Game.Engine.Universe;
 import com.Ezz.Game.Engine.math.Vector2;
 import android.view.MotionEvent;

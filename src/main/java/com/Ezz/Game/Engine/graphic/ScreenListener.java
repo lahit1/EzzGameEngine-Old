@@ -1,4 +1,4 @@
-package com.Ezz.Game.Engine.ui;
+package com.Ezz.Game.Engine.graphic;
 
 public interface ScreenListener{
 	abstract public void onClick();

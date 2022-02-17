@@ -10,11 +10,12 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnTouchListener;
 import android.widget.LinearLayout.LayoutParams;
-import com.Ezz.Game.Engine.Entity;
+import com.Ezz.Game.Engine.graphic.Entity;
 import com.Ezz.Game.Engine.math.Vector2;
 import java.util.ArrayList;
 import android.view.View.OnLongClickListener;
 import android.os.Handler;
+import android.app.ActionBar;
 
 abstract public class Universe {
 
@@ -33,6 +34,10 @@ abstract public class Universe {
 	
 	public Context getContext(){
 		return context;
+	}
+	
+	public ActionBar getActionBar(){
+		return ((Activity) context).getActionBar();
 	}
 	
 	public AssetManager getAssets(){
@@ -114,6 +119,12 @@ abstract public class Universe {
 		@Override
 		protected void onDraw(Canvas canvas) {
 			super.onDraw(canvas);
+			for(Entity e: entities){
+				if(e.isUI()){
+					entities.remove(e);
+					entities.add(e);
+				}
+			}
 			for(Entity e: entities){
 				e.getScript().update();
 				e.draw(canvas);

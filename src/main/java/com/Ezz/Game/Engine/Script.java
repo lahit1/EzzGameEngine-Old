@@ -2,8 +2,10 @@ package com.Ezz.Game.Engine;
 
 import android.content.res.AssetManager;
 import android.content.res.Resources;
+import com.Ezz.Game.Engine.graphic.Entity;
+import java.lang.reflect.ParameterizedType;
 
-abstract public class Script{
+abstract public class Script<Entity>{
 	public Entity myEntity;
 	private Universe Universe;
 	private AssetManager AssetManager;

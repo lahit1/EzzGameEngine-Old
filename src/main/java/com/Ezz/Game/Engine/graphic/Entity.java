@@ -1,13 +1,12 @@
-package com.Ezz.Game.Engine;
+package com.Ezz.Game.Engine.graphic;
 
 import android.annotation.NonNull;
 import android.graphics.Canvas;
-import android.graphics.Color;
 import android.graphics.Paint;
+import com.Ezz.Game.Engine.Script;
+import com.Ezz.Game.Engine.Universe;
+import com.Ezz.Game.Engine.graphic.ScreenListener;
 import com.Ezz.Game.Engine.math.Vector2;
-import android.view.View.OnClickListener;
-import android.view.View.OnTouchListener;
-import com.Ezz.Game.Engine.ui.ScreenListener;
 
 abstract public class Entity {
 
@@ -77,7 +76,7 @@ abstract public class Entity {
 	public Vector2 getSize() {
 		return size;
 	}
-
+	
 	public void setScreenListener(ScreenListener sl) {
 		this.sl = sl;
 	}

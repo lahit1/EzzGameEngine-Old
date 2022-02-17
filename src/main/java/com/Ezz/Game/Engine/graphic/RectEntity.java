@@ -1,7 +1,7 @@
-package com.Ezz.Game.Engine.ui;
+package com.Ezz.Game.Engine.graphic;
 
 import android.graphics.Canvas;
-import com.Ezz.Game.Engine.Entity;
+import com.Ezz.Game.Engine.graphic.Entity;
 import com.Ezz.Game.Engine.Universe;
 
 public class RectEntity extends Entity{
