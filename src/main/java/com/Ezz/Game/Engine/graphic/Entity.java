@@ -88,6 +88,9 @@ abstract public class Entity {
 	public void setScript(Script script) {
 		this.script = script;
 		script.myEntity = this;
+		script.setAssetManager(getUniverse().getAssets());
+		script.setResources(getUniverse().getResources());
+		script.setUniverse(getUniverse());
 		script.start();
 	}
 
