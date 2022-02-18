@@ -1,11 +1,11 @@
 package com.Ezz.Game.Engine.graphic;
 
 import android.graphics.Canvas;
-import com.Ezz.Game.Engine.graphic.Entity;
 import com.Ezz.Game.Engine.Universe;
+import com.Ezz.Game.Engine.graphic.Entity;
 
 public class CircleEntity extends Entity {
-	
+
 	public CircleEntity(Universe universe){
 		super(universe);
 	}
@@ -30,6 +30,10 @@ public class CircleEntity extends Entity {
 
 	@Override
 	public void onTouch() {
+	}
+
+	@Override
+	public void onTouchMove() {
 	}
 
 	@Override

@@ -22,6 +22,7 @@ abstract public class Universe {
 	private Engine engine;
 	private Context context;
 	public ArrayList<Entity> entities = new ArrayList<Entity>();
+	private ArrayList<Entity> UIentities = new ArrayList<Entity>();
 	public Input Input = new Input();
 	public Camera Camera = new Camera();
 
@@ -74,6 +75,8 @@ abstract public class Universe {
 
 	private class Engine extends View implements OnTouchListener, OnLongClickListener {
 
+		private Entity lastTouchedEntity;
+
 		Engine(Context context){
 			super(context);
 			Camera.size.set(getWidth(), getHeight());
@@ -87,6 +90,7 @@ abstract public class Universe {
 			onScreenTouch(p2.getX(), getHeight() - p2.getY());
 			for(final Entity e: entities){
 				if(e.getPosition().x < Input.getPosition().x && Input.getPosition().x < e.getPosition().x + e.getSize().x && e.getPosition().y < Input.getPosition().y && Input.getPosition().y < e.getPosition().y + e.getSize().y){
+					lastTouchedEntity = e;
 					switch(p2.getAction()){
 						case MotionEvent.ACTION_UP:
 							e.onClick();
@@ -97,6 +101,10 @@ abstract public class Universe {
 							e.getScreenListener().onTouch();
 							break;
 					}
+				}else if(e == lastTouchedEntity){
+					lastTouchedEntity = null;
+					e.onTouchMove();
+					e.getScreenListener().onTouchMove();
 				}
 			}
 			Input.action = p2.getAction();
@@ -120,12 +128,16 @@ abstract public class Universe {
 		protected void onDraw(Canvas canvas) {
 			super.onDraw(canvas);
 			for(Entity e: entities){
-				if(e.isUI()){
-					entities.remove(e);
-					entities.add(e);
-				}
+				if(e.isUI()) UIentities.add(e);
+				else if(UIentities.contains(e)) UIentities.remove(e);
 			}
 			for(Entity e: entities){
+				if(!e.isUI()){
+					e.getScript().update();
+					e.draw(canvas);
+				}
+			}
+			for(Entity e: UIentities){
 				e.getScript().update();
 				e.draw(canvas);
 			}

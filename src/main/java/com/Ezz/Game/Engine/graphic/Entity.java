@@ -25,31 +25,23 @@ abstract public class Entity {
 		universe.entities.add(this);
 		sl = new ScreenListener(){
 			@Override
-			public void onClick() {
-			}
+			public void onClick() {}
 			@Override
-			public void onTouch() {
-			}
+			public void onTouch() {}
 			@Override
-			public void onLongClick(){
-			}
+			public void onTouchMove() {}
+			@Override
+			public void onLongClick() {}
 		};
 		script = new Script(){
-
 			@Override
-			public void start() {
-			}
+			public void start() {}
 			@Override
-			public void update() {
-			}
-			
+			public void update() {}
 			@Override
-			public void onClick() {
-			}
-
+			public void onClick() {}
 			@Override
-			public void onTouch() {
-			}
+			public void onTouch() {}
 		};
 	}
 
@@ -59,6 +51,8 @@ abstract public class Entity {
 
 	abstract public void onTouch();
 
+	abstract public void onTouchMove();
+	
 	abstract public void onLongClick();
 
 	public Universe getUniverse() {

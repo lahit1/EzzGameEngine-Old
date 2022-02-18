@@ -55,6 +55,10 @@ public class SwitchEntity extends Entity {
 	}
 
 	@Override
+	public void onTouchMove() {
+	}
+
+	@Override
 	public void onClick() {
 		checked = !checked;
 	}
