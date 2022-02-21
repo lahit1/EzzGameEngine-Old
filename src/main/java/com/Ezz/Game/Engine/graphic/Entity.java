@@ -5,15 +5,18 @@ import android.graphics.Canvas;
 import android.graphics.Paint;
 import com.Ezz.Game.Engine.Script;
 import com.Ezz.Game.Engine.Universe;
-import com.Ezz.Game.Engine.graphic.ScreenListener;
 import com.Ezz.Game.Engine.math.Vector2;
+import com.Ezz.Game.Engine.util.Color;
+import com.Ezz.Game.Engine.util.ScreenListener;
 
 abstract public class Entity {
 
 	private Universe universe;
-	private Paint paint = new Paint();
+	Paint paint = new Paint();
+	private Color color;
 	private Vector2 position = new Vector2();
 	private Vector2 size = new Vector2(50, 50);
+	private float rotation;
 	private ScreenListener sl;
 	private Script script;
 	private boolean isUI = false;
@@ -25,30 +28,28 @@ abstract public class Entity {
 		universe.entities.add(this);
 		sl = new ScreenListener(){
 			@Override
-			public void onClick() {
-			}
+			public void onClick() {}
 			@Override
-			public void onTouch() {
-			}
+			public void onTouch() {}
 			@Override
-			public void onLongClick(){
-			}
+			public void onTouchMove() {}
 		};
 		script = new Script(){
-
 			@Override
-			public void start() {
-			}
+			public void start() {}
 			@Override
-			public void update() {
-			}
-			
+			public void update() {}
 			@Override
-			public void onClick() {
-			}
-
+			public void onClick() {}
 			@Override
-			public void onTouch() {
+			public void onTouch() {}
+		};
+		color = new Color(){
+			@Override
+			public Color set(String hexColor) {
+				super.set(hexColor);
+				paint.setColor(toInt());
+				return color;
 			}
 		};
 	}
@@ -59,14 +60,20 @@ abstract public class Entity {
 
 	abstract public void onTouch();
 
+	abstract public void onTouchMove();
+	
 	abstract public void onLongClick();
 
 	public Universe getUniverse() {
 		return universe;
 	}
 
-	public Paint getPaint() {
+	Paint getPaint() {
 		return paint;
+	}
+
+	public Color getColor(){
+		return color;
 	}
 
 	public Vector2 getPosition() {
@@ -76,7 +83,19 @@ abstract public class Entity {
 	public Vector2 getSize() {
 		return size;
 	}
-	
+
+	public void setRotation(float degrees){
+		rotation = degrees;
+	}
+
+	public void rotate(float degrees){
+		rotation += degrees;
+	}
+
+	public float getRotation(){
+		return rotation;
+	}
+
 	public void setScreenListener(ScreenListener sl) {
 		this.sl = sl;
 	}
@@ -105,12 +124,12 @@ abstract public class Entity {
 	public boolean isUI() {
 		return isUI;
 	}
-
+	
 	public float getRenderX() {
-		return position.x - (isUI ? 0 : universe.Camera.getPosition().x);
+		return position.x - (isUI ? 0 : universe.Camera.getPosition().x) - size.x/2;
 	}
 
 	public float getRenderY() {
-		return -position.y + universe.Camera.getSize().y - size.y - (isUI ? 0 : universe.Camera.getPosition().y);
+		return -position.y + universe.Camera.getSize().y - size.y/2 - (isUI ? 0 : universe.Camera.getPosition().y);
 	}
 }

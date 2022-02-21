@@ -13,9 +13,14 @@ public class Vector2 {
 		this.x = x;
 		this.y = y;
 	}
+	
+	public Vector2(Vector2 v){
+		this.x = v.x;
+		this.y = v.y;
+	}
 
-	public double getHypotenuse(){
-		return Math.hypot(x, y);
+	public float getHypotenuse(){
+		return (float)Math.hypot(x, y);
 	}
 
 	public float getAngle(){
@@ -70,6 +75,12 @@ public class Vector2 {
 	public void div(@NonNull Vector2 v){
 		this.x /= v.x;
 		this.y /= v.y;
+	}
+	
+	public Vector2 calculate(Vector2 v){
+		Vector2 vc = new Vector2(v);
+		vc.sub(this);
+		return vc;
 	}
 	
 	public Float[] toFloatArray(){

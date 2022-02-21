@@ -3,32 +3,53 @@ package com.Ezz.Game.Engine;
 import android.annotation.NonNull;
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.content.res.AssetManager;
 import android.content.res.Resources;
 import android.graphics.Canvas;
+import android.graphics.Paint;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnTouchListener;
 import android.widget.LinearLayout.LayoutParams;
 import com.Ezz.Game.Engine.graphic.Entity;
 import com.Ezz.Game.Engine.math.Vector2;
+import com.Ezz.Game.Engine.util.Color;
+import com.Ezz.Game.Engine.util.ScreenListener;
 import java.util.ArrayList;
-import android.view.View.OnLongClickListener;
-import android.os.Handler;
-import android.app.ActionBar;
+import java.util.Date;
 
-abstract public class Universe {
+abstract public class Universe{
 
 	private Engine engine;
+	private Vector2 gravity = new Vector2(1, 1);
+	private float deltaTime;
+	private ActionBar ActionBar = new ActionBar();
 	private Context context;
 	public ArrayList<Entity> entities = new ArrayList<Entity>();
+	private ArrayList<Entity> UIentities = new ArrayList<Entity>();
 	public Input Input = new Input();
 	public Camera Camera = new Camera();
+	private ScreenListener screenListener;
 
 	public Universe(@NonNull Context context){
 		this.context = context;
 		((Activity) context).getActionBar().hide();
 		engine = new Engine(context);
+		screenListener = new ScreenListener(){
+
+			@Override
+			public void onClick() {
+			}
+
+			@Override
+			public void onTouch() {
+			}
+
+			@Override
+			public void onTouchMove() {
+			}
+		};
 		start();
 	}
 	
@@ -37,7 +58,7 @@ abstract public class Universe {
 	}
 	
 	public ActionBar getActionBar(){
-		return ((Activity) context).getActionBar();
+		return ActionBar;
 	}
 	
 	public AssetManager getAssets(){
@@ -52,10 +73,25 @@ abstract public class Universe {
 		return engine;
 	}
 	
+	public Vector2 getGravity(){
+		return gravity;
+	}
+	
+	public void setScreenListener(ScreenListener screenListener){
+		this.screenListener = screenListener;
+	}
+	
+	public ScreenListener getScreenListener(){
+		return screenListener;
+	}
+	
+	public float getDeltaTime(){
+		return deltaTime;
+	}
+	
 	public abstract void start();
 	public abstract void update();
-	public abstract void onScreenTouch(float x, float y);
-
+	
 	public void setUniverse(@NonNull Universe universe){
 		((Activity) context).setContentView(universe.getEngine());
 	}
@@ -72,21 +108,45 @@ abstract public class Universe {
 		((Activity) context).setContentView(view);
 	}
 
-	private class Engine extends View implements OnTouchListener, OnLongClickListener {
+	public void startActivity(Intent intent){
+		((Activity) context).startActivity(intent);
+	}
+
+	public class Engine extends View implements OnTouchListener {
+
+		private Entity lastTouchedEntity;
+		private float lastTime;
 
 		Engine(Context context){
 			super(context);
 			Camera.size.set(getWidth(), getHeight());
 			setOnTouchListener(this);
-			setOnLongClickListener(this);
+			lastTime = new Date().getTime();
 		}
 		
+		public Universe getUniverse(){
+			return Universe.this;
+		}
 		
 		@Override
 		public boolean onTouch(View p1, MotionEvent p2) {
-			onScreenTouch(p2.getX(), getHeight() - p2.getY());
+			Input.action = p2.getAction();
+			Input.me = p2;
+			Input.position.set(p2.getX(), getHeight() - p2.getY());
+			switch(p2.getAction()){
+				case p2.ACTION_UP:
+					screenListener.onClick();
+				break;
+				case p2.ACTION_MOVE:
+					screenListener.onTouchMove();
+				break;
+				default:
+					screenListener.onTouch();
+				break;
+			}
 			for(final Entity e: entities){
 				if(e.getPosition().x < Input.getPosition().x && Input.getPosition().x < e.getPosition().x + e.getSize().x && e.getPosition().y < Input.getPosition().y && Input.getPosition().y < e.getPosition().y + e.getSize().y){
+					lastTouchedEntity = e;
 					switch(p2.getAction()){
 						case MotionEvent.ACTION_UP:
 							e.onClick();
@@ -97,41 +157,44 @@ abstract public class Universe {
 							e.getScreenListener().onTouch();
 							break;
 					}
-				}
-			}
-			Input.action = p2.getAction();
-			Input.me = p2;
-			Input.position.set(p2.getX(), getHeight() - p2.getY());
-			return true;
-		}
-
-		@Override
-		public boolean onLongClick(View p1) {
-			for(Entity e: entities){
-				if(e.getPosition().x < Input.getPosition().x && Input.getPosition().x < e.getPosition().x + e.getSize().x && e.getPosition().y < Input.getPosition().y && Input.getPosition().y < e.getPosition().y + e.getSize().y){
-					e.onLongClick();
-					e.getScreenListener().onLongClick();
+				}else if(e == lastTouchedEntity){
+					lastTouchedEntity = null;
+					e.onTouchMove();
+					e.getScreenListener().onTouchMove();
 				}
 			}
 			return true;
 		}
-		
 		@Override
 		protected void onDraw(Canvas canvas) {
 			super.onDraw(canvas);
 			for(Entity e: entities){
-				if(e.isUI()){
-					entities.remove(e);
-					entities.add(e);
-				}
+				if(e.isUI()) UIentities.add(e);
+				else if(UIentities.contains(e)) UIentities.remove(e);
 			}
 			for(Entity e: entities){
+				if(!e.isUI()){
+					canvas.save();
+					canvas.rotate(e.getRotation(), e.getRenderX() + e.getSize().x/2, e.getRenderY() + e.getSize().y/2);
+					e.getScript().update();
+					e.draw(canvas);
+					canvas.restore();
+				}
+			}
+			for(Entity e: UIentities){
+				canvas.save();
+				canvas.rotate(e.getRotation(), e.getRenderX(), e.getRenderY() + e.getSize().y);
 				e.getScript().update();
 				e.draw(canvas);
+				canvas.restore();
 			}
+			ActionBar.draw(canvas);
 			update();
 			if(Camera.follow != null)
 				Camera.getPosition().set(Camera.follow.getPosition());
+			float t = lastTime - new Date().getTime();
+			deltaTime = lastTime - t;
+			lastTime = t;
 			invalidate();
 		}
 
@@ -176,6 +239,37 @@ abstract public class Universe {
 		
 		public void followEntity(Entity entity){
 			follow = entity;
+		}
+	}
+	
+	public class ActionBar{
+		
+		private Paint paint = new Paint();
+		private Color color;
+		private boolean isShow;
+		
+		public ActionBar(){
+			color = new Color(){
+				@Override
+				public Color set(String hexColor) {
+					super.set(hexColor);
+					paint.setColor(toInt());
+					return color;
+				}
+			}.set("6666ff");
+		}
+		
+		public void draw(Canvas canvas){
+			if(!isShow) return;
+			canvas.drawRect(0, 0, getEngine().getWidth(), 100, paint);
+		}
+		
+		public void show(){
+			isShow = true;
+		}
+		
+		public void hide(){
+			isShow = false;
 		}
 	}
 }

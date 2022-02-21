@@ -24,6 +24,10 @@ public class OvalEntity extends Entity {
 	}
 
 	@Override
+	public void onTouchMove() {
+	}
+
+	@Override
 	public void onLongClick() {
 	}
 }
