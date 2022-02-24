@@ -6,16 +6,14 @@ import com.Ezz.Game.Engine.graphic.Entity;
 import java.lang.reflect.ParameterizedType;
 
 abstract public class Script<Entity>{
-	public Entity myEntity;
+	public com.Ezz.Game.Engine.graphic.Entity myEntity = null;
 	private Universe Universe;
 	private AssetManager AssetManager;
 	private Resources Resources;
 
 	abstract public void start();
 	abstract public void update();
-	abstract public void onClick();
-	abstract public void onTouch();
-
+	
 	public void setUniverse(Universe universe) {
 		Universe = universe;
 	}

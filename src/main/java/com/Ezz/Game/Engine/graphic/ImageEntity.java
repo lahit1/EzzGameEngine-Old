@@ -18,7 +18,7 @@ public class ImageEntity extends Entity {
 		this.image = image;
 	}
 
-	public void setDrawable(Image image) {
+	public void setImage(Image image) {
 		this.image = image;
 	}
 
@@ -42,6 +42,6 @@ public class ImageEntity extends Entity {
 	}
 
 	@Override
-	public void onLongClick() {
+	public void onTouchMove() {
 	}
 }

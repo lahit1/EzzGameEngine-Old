@@ -16,6 +16,12 @@ public class Vector3 {
 		this.z = z;
 	}
 
+	public Vector3(Vector3 v){
+		this.x = v.x;
+		this.y = v.y;
+		this.z = v.z;
+	}
+
 	public void set(float x, float y, float z){
 		this.x = x;
 		this.y = y;
@@ -76,13 +82,25 @@ public class Vector3 {
 		this.z /= v.z;
 	}
 
-	public Float[] toFloatArray(){
+	public Vector3 calculate(float x, float y, float z){
+		Vector3 vc = new Vector3(x, y, z);
+		vc.sub(this);
+		return vc;
+	}
+
+	public Vector3 calculate(Vector3 v){
+		Vector3 vc = new Vector3(v);
+		vc.sub(this);
+		return vc;
+	}
+
+	public Float[] toArray(){
 		Float[] f = {x, y, z};
 		return f;
 	}
 
 	@Override
 	public String toString() {
-		return toFloatArray().toString();
+		return toArray().toString();
 	}
 }

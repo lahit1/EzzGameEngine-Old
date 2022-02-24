@@ -18,6 +18,13 @@ public class Quaternion {
 		this.w = w;
 	}
 
+	public Quaternion(@NonNull Quaternion q){
+		this.x = q.x;
+		this.y = q.y;
+		this.z = q.z;
+		this.w = q.w;
+	}
+
 	public void set(float x, float y, float z, float w){
 		this.x = x;
 		this.y = y;
@@ -39,7 +46,7 @@ public class Quaternion {
 		this.w += w;
 	}
 	
-	public void add(Quaternion q){
+	public void add(@NonNull Quaternion q){
 		this.x += q.x;
 		this.y += q.y;
 		this.z += q.z;
@@ -53,7 +60,7 @@ public class Quaternion {
 		this.w -= w;
 	}
 
-	public void sub(Quaternion q){
+	public void sub(@NonNull Quaternion q){
 		this.x -= q.x;
 		this.y -= q.y;
 		this.z -= q.z;
@@ -67,7 +74,7 @@ public class Quaternion {
 		this.w *= w;
 	}
 	
-	public void mul(Quaternion q){
+	public void mul(@NonNull Quaternion q){
 		this.x *= q.x;
 		this.y *= q.y;
 		this.z *= q.z;
@@ -81,20 +88,32 @@ public class Quaternion {
 		this.w /= w;
 	}
 
-	public void div(Quaternion q){
+	public void div(@NonNull Quaternion q){
 		this.x /= q.x;
 		this.y /= q.y;
 		this.z /= q.z;
 		this.w /= q.w;
 	}
 
-	public Float[] toFloatArray(){
+	public Quaternion calculate(float x, float y, float z, float w){
+		Quaternion qc = new Quaternion(x, y, z, w);
+		qc.sub(this);
+		return qc;
+	}
+
+	public Quaternion calculate(@NonNull Quaternion v){
+		Quaternion qc = new Quaternion(v);
+		qc.sub(this);
+		return qc;
+	}
+
+	public Float[] toArray(){
 		Float[] f = {x, y, z, w};
 		return f;
 	}
 
 	@Override
 	public String toString() {
-		return toFloatArray().toString();
+		return toArray().toString();
 	}
 }
