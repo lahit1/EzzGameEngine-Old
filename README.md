@@ -10,4 +10,4 @@ An perfect game engine xD
 
 <a href="https://discord.gg/aB6eYvDYF8" target="_blank">Discord</a><br/>
 
-&copy; **2022**
+&copy; __**2022** Naif Can Başçı__
