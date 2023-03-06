@@ -1,9 +1,11 @@
 # EzzGameEngine
 An perfect game engine xD
 
+# Owner <br/>
+Naif Can Başçı
+
 # Credits<br/>
-<b>App</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Ömer Karakaş - Andr0S<br/>
-<b>Library</b>&nbsp;&nbsp;Naif Can Başçı
+Ömer Karakaş
 
 <a href="https://github.com/lahit1/EzzGameEngine/blob/master/LICENSE" target="_blank">LICENSE</a><br/>
 <a href="https://github.com/lahit1/EzzGameEngine/blob/master/SECURITY.md" target="_blank">Security Policy</a>
