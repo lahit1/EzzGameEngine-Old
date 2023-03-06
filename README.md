@@ -1,5 +1,4 @@
-# EzzGameEngine
-An perfect game engine xD
+A simple and powerful Framework for game development on Android devices. 
 
 # Owner <br/>
 Naif Can Başçı
@@ -11,5 +10,3 @@ Naif Can Başçı
 <a href="https://github.com/lahit1/EzzGameEngine/blob/master/SECURITY.md" target="_blank">Security Policy</a>
 
 <a href="https://discord.gg/aB6eYvDYF8" target="_blank">Discord</a><br/>
-
-&copy; __**2022** Naif Can Başçı__
